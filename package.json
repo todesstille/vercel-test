@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon ./dist",
+    "start": "npx nodemon ./dist/index.js",
     "jest": "jest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

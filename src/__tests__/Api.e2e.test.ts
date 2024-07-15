@@ -1,5 +1,5 @@
 import request from 'supertest'
-import { app } from '../src/settings'
+import { app } from '../settings'
 
 describe("Api", () => {
     describe("root", () => {
