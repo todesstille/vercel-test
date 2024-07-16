@@ -106,8 +106,8 @@ app.post("/videos", (req, res) => {
             author: body.author,
             canBeDownloaded: true,
             minAgeRestriction: null,
-            createdAt: new Date(currentDate.getTime() + 86400000),
-            publicationDate: currentDate,
+            createdAt: currentDate,
+            publicationDate: new Date(currentDate.getTime() + 86400000),
             availableResolutions: body.availableResolutions
         };
         db.push(video);
