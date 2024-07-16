@@ -82,16 +82,16 @@ app.get("/", (req, res) => {
     res.status(200).json({version: '1.0'})
 })
 
-app.delete("/hometask_01/api/testing/all-data", (req, res) => {
+app.delete("/testing/all-data", (req, res) => {
     db = [];
     res.send(204);
 });
 
-app.get("/hometask_01/api/videos", (req, res) => {
+app.get("/videos", (req, res) => {
     res.status(200).json(db);
 });
 
-app.post("/hometask_01/api/videos", (req, res) => {
+app.post("/videos", (req, res) => {
     const body = req.body;
     const errors = validateInput(body);
     if (errors.length > 0) {
@@ -114,7 +114,7 @@ app.post("/hometask_01/api/videos", (req, res) => {
     }
 });
 
-app.get("/hometask_01/api/videos/:id", (req, res) => {
+app.get("/videos/:id", (req, res) => {
     for (let p of db) {
         if (p.id.toString() == req.params.id) {
             res.status(200).json(p);
@@ -125,7 +125,7 @@ app.get("/hometask_01/api/videos/:id", (req, res) => {
     res.send(404);
 })
 
-app.delete("/hometask_01/api/videos/:id", (req, res) => {
+app.delete("/videos/:id", (req, res) => {
     for (let i = 0; i < db.length; i++) {
         if (db[i].id.toString() == req.params.id) {
             db[i] = db[db.length - 1];
@@ -138,7 +138,7 @@ app.delete("/hometask_01/api/videos/:id", (req, res) => {
     res.send(404);
 })
 
-app.put("/hometask_01/api/videos/:id", (req, res) => {
+app.put("/videos/:id", (req, res) => {
     for (let i = 0; i < db.length; i++) {
         if (db[i].id.toString() == req.params.id) {
             const body = req.body;
