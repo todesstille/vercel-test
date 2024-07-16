@@ -143,7 +143,7 @@ app.put("/videos/:id", (req, res) => {
             const body = req.body;
             const errors = validateUpdate(body);
             if (errors.length > 0) {
-                res.status(404).json({
+                res.status(400).json({
                     errorMessages: [errors]
                 })
                 return;
@@ -154,5 +154,5 @@ app.put("/videos/:id", (req, res) => {
         }
     }
 
-    res.send(400);
+    res.send(404);
 })
