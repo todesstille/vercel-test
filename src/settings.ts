@@ -99,14 +99,15 @@ app.post("/videos", (req, res) => {
             errorMessages: [errors]
         })
     } else {
+        const currentDate = new Date();
         const video = {
             id: ids++,
             title: body.title,
             author: body.author,
             canBeDownloaded: true,
             minAgeRestriction: null,
-            createdAt: new Date(),
-            publicationDate: new Date(),
+            createdAt: new Date(currentDate.getTime() + 86400000),
+            publicationDate: currentDate,
             availableResolutions: body.availableResolutions
         };
         db.push(video);
