@@ -93,7 +93,7 @@ app.post("/videos", (req, res) => {
     const body = req.body;
     const errors = validateInput(body);
     if (errors.length > 0) {
-        res.status(404).json({
+        res.status(400).json({
             errorMessages: [errors]
         })
     } else {
