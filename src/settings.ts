@@ -49,7 +49,7 @@ function validateUpdate(obj: any): any {
         }
     }
 
-    if (typeof obj.publicationDate !== 'undefined' && typeof obj.minAgeRestriction !== 'string') {
+    if (typeof obj.publicationDate !== 'undefined' && typeof obj.publicationDate !== 'string') {
         errors.push({message: 'error!', field: 'publicationDate'});
     }
 
