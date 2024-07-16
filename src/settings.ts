@@ -59,7 +59,7 @@ function validateUpdate(obj: any): any {
 function modifyObject(old: any, n: any) {
     old.title = n.title;
     old.author = n.author;
-    old.allowedResolutions = n.allowedResolutions;
+    old.availableResolutions = n.availableResolutions;
 
     if (typeof n.canBeDownloaded !== 'undefined') {
         old.canBeDownloaded = n.canBeDownloaded;
