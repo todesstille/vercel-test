@@ -13,10 +13,10 @@ function validateInput(obj: any): any {
         errors.push({message: 'error!', field: 'availableResolution'});
         return errors;
     };
-    if (typeof obj.title !== 'string' || obj.title.length < 41) {
+    if (typeof obj.title !== 'string' || obj.title.length > 40) {
         errors.push({message: 'error!', field: 'title'});
     };
-    if (typeof obj.author !== 'string' || obj.author.length < 21) {
+    if (typeof obj.author !== 'string' || obj.author.length > 20) {
         errors.push({message: 'error!', field: 'author'});
     };
     if (typeof obj.availableResolutions !== 'object' || !Array.isArray(obj.availableResolutions || obj.availableResolutions.length == 0)) {
