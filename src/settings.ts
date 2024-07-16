@@ -79,7 +79,7 @@ function modifyObject(old: any, n: any) {
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.status(200).json({version: '1.0'})
+    res.status(200).json({version: '2.0'})
 })
 
 app.delete("/testing/all-data", (req, res) => {
@@ -110,7 +110,7 @@ app.post("/videos", (req, res) => {
             availableResolutions: body.availableResolutions
         };
         db.push(video);
-        res.status(400).json(video);
+        res.status(201).json(video);
     }
 });
 
