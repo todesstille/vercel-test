@@ -19,7 +19,7 @@ function validateInput(obj: any): any {
     if (typeof obj.author !== 'string') {
         errors.push({message: 'error!', field: 'author'});
     };
-    if (typeof obj.availableResolutions !== 'object' || !Array.isArray(obj.availableResolutions)) {
+    if (typeof obj.availableResolutions !== 'object' || !Array.isArray(obj.availableResolutions || obj.availableResolutions.length == 0)) {
         errors.push({message: 'error!', field: 'availableResolutions'});
     } else {
         for (let p of obj.availableResolutions) {
@@ -31,6 +31,49 @@ function validateInput(obj: any): any {
     }
 
     return errors;
+}
+
+function validateUpdate(obj: any): any {
+    const errors = validateInput(obj);
+
+    if (typeof obj.canBeDownloaded !== 'undefined' && typeof obj.canBeDownloaded !== 'boolean') {
+        errors.push({message: 'error!', field: 'canBeDownloaded'});
+    }
+
+    if (typeof obj.minAgeRestriction !== 'undefined' && typeof obj.minAgeRestriction !== 'number') {
+        errors.push({message: 'error!', field: 'minAgeRestriction'});
+    } else {
+        const minAge = obj.minAgeRestriction;
+        if (minAge < 1 || minAge > 18) {
+            errors.push({message: 'error!', field: 'minAgeRestriction'});
+        }
+    }
+
+    if (typeof obj.publicationDate !== 'undefined' && typeof obj.minAgeRestriction !== 'string') {
+        errors.push({message: 'error!', field: 'publicationDate'});
+    }
+
+    return errors;
+}
+
+function modifyObject(old: any, n: any) {
+    old.title = n.title;
+    old.author = n.author;
+    old.allowedResolutions = n.allowedResolutions;
+
+    if (typeof n.canBeDownloaded !== 'undefined') {
+        old.canBeDownloaded = n.canBeDownloaded;
+    } else {
+        old.canBeDownloaded = false;
+    }
+
+    if (typeof n.minAgeRestriction !== 'undefined') {
+        old.minAgeRestriction = n.minAgeRestriction;
+    }
+
+    if (typeof n.publicationDate !== 'undefined') {
+        old.publicationDate = n.publicationDate;
+    }
 }
 
 app.use(express.json());
@@ -51,7 +94,6 @@ app.get("/hometask_01/api/videos", (req, res) => {
 app.post("/hometask_01/api/videos", (req, res) => {
     const body = req.body;
     const errors = validateInput(body);
-    console.log(errors)
     if (errors.length > 0) {
         res.status(404).json({
             errorMessages: [errors]
@@ -83,20 +125,35 @@ app.get("/hometask_01/api/videos/:id", (req, res) => {
     res.send(404);
 })
 
-app.get("/cources/", (request, responce) => {
-    responce.json([
-        {id: 1,
-        name: "frontend"},
-        {id: 2,
-        name: "backend"}
-    ]);
-});
+app.delete("/hometask_01/api/videos/:id", (req, res) => {
+    for (let i = 0; i < db.length; i++) {
+        if (db[i].id.toString() == req.params.id) {
+            db[i] = db[db.length - 1];
+            db.pop();
+            res.send(204);
+            return;
+        }
+    }
 
-app.get("/cources/:id", (request, responce) => {
-    responce.json([
-        {id: 1,
-        name: "frontend"},
-        {id: 2,
-        name: "backend"}
-    ].find(c => c.id === +request.params.id));
-});
+    res.send(404);
+})
+
+app.put("/hometask_01/api/videos/:id", (req, res) => {
+    for (let i = 0; i < db.length; i++) {
+        if (db[i].id.toString() == req.params.id) {
+            const body = req.body;
+            const errors = validateUpdate(body);
+            if (errors.length > 0) {
+                res.status(404).json({
+                    errorMessages: [errors]
+                })
+                return;
+            }
+            modifyObject(db[i], body);
+            res.send(204);
+            return;
+        }
+    }
+
+    res.send(400);
+})
