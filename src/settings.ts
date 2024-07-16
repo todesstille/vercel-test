@@ -63,8 +63,6 @@ function modifyObject(old: any, n: any) {
 
     if (typeof n.canBeDownloaded !== 'undefined') {
         old.canBeDownloaded = n.canBeDownloaded;
-    } else {
-        old.canBeDownloaded = false;
     }
 
     if (typeof n.minAgeRestriction !== 'undefined') {
@@ -104,7 +102,7 @@ app.post("/videos", (req, res) => {
             id: ids++,
             title: body.title,
             author: body.author,
-            canBeDownloaded: true,
+            canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: currentDate,
             publicationDate: new Date(currentDate.getTime() + 86400000),
