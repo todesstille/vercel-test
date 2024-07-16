@@ -94,7 +94,7 @@ app.post("/videos", (req, res) => {
     const errors = validateInput(body);
     if (errors.length > 0) {
         res.status(400).json({
-            errorMessages: errors
+            errorsMessages: errors
         })
     } else {
         const currentDate = new Date();
@@ -144,7 +144,7 @@ app.put("/videos/:id", (req, res) => {
             const errors = validateUpdate(body);
             if (errors.length > 0) {
                 res.status(400).json({
-                    errorMessages: errors
+                    errorsMessages: errors
                 })
                 return;
             }
