@@ -7,19 +7,14 @@ const allowedResolutions = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1
 
 function validateInput(obj: any): any {
     const errors: any = [];
-    if (typeof obj !== 'object' || obj === null) {
-        errors.push({message: 'error!', field: 'title'});
-        errors.push({message: 'error!', field: 'author'});
-        errors.push({message: 'error!', field: 'availableResolution'});
-        return errors;
-    };
     if (typeof obj.title !== 'string' || obj.title.length > 40) {
         errors.push({message: 'error!', field: 'title'});
     };
     if (typeof obj.author !== 'string' || obj.author.length > 20) {
         errors.push({message: 'error!', field: 'author'});
     };
-    if (typeof obj.availableResolutions !== 'object' || !Array.isArray(obj.availableResolutions || obj.availableResolutions.length == 0)) {
+
+    if (typeof obj.availableResolutions !== 'object' || !Array.isArray(obj.availableResolutions) || obj.availableResolutions.length == 0) {
         errors.push({message: 'error!', field: 'availableResolutions'});
     } else {
         for (let p of obj.availableResolutions) {
